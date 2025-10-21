@@ -11,15 +11,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: maven
 
-      - name: Build and test with Maven
-        run: mvn -B clean verify --file simple-api/simpleapi/simpleapi/pom.xml
+      - name: Build, test and analyze with Maven & SonarCloud
+        run: >
+          mvn -B verify sonar:sonar
+          -Dsonar.projectKey=Artzerr_tp-devops
+          -Dsonar.organization=artzerr
+          -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          --file simple-api/simpleapi/simpleapi/pom.xml
 
   build-and-push-images:
     needs: test-backend
