@@ -33,4 +33,4 @@ jobs:
       - name: Build and test with Maven
         # -B = Batch mode (non-interactif)
         # --file = Spécifie le chemin vers le pom.xml de notre API
-        run: mvn -B clean verify --file simple-api/pom.xml
+        run: mvn -B clean verify --file simple-api/simpleapi/simpleapi/pom.xml
