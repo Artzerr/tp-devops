@@ -1,0 +1,10 @@
+- hosts: all
+  gather_facts: true
+  become: true
+
+  roles:
+    - docker      # 1. On s'assure que Docker est installé
+    - network     # 2. On crée le réseau
+    - database    # 3. On lance la base de données
+    - app         # 4. On lance l'API (qui dépend de la DB)
+    - proxy       # 5. On lance le proxy (qui dépend de l'API)

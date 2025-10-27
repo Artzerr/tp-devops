@@ -1,0 +1,10 @@
+- name: Launch httpd proxy container
+  community.docker.docker_container:
+    name: my-http-server
+    image: artzerrr/my-http-server:1.0
+    state: started
+    restart_policy: always
+    networks:
+      - name: app-network
+    ports:
+      - "80:80"

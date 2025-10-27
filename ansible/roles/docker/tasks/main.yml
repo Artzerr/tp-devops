@@ -1,0 +1,56 @@
+- name: Install required packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+      - python3-venv
+    state: latest
+    update_cache: yes
+
+    # --- Ajout du dépôt Docker ---
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker APT repository
+  apt_repository:
+    # Ici on utilise un "fact" ! Ansible remplace dynamiquement la variable
+    # par le nom de la version de Debian (ex: 'bullseye')
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_facts['distribution_release'] }} stable"
+    state: present
+    update_cache: yes
+
+    # --- Installation de Docker et de ses dépendances Python ---
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Install Python3 and pip3
+  apt:
+    name:
+      - python3
+      - python3-pip
+    state: present
+
+    # --- Installation du SDK Docker pour Python (pour que les modules Ansible fonctionnent) ---
+- name: Create a virtual environment for Docker SDK
+  command: python3 -m venv /opt/docker_venv
+  args:
+    # Ne lance la commande que si le dossier n'existe pas déjà
+    # C'est ce qui rend Ansible "idempotent"
+    creates: /opt/docker_venv
+
+- name: Install Docker SDK for Python in virtual environment
+  command: /opt/docker_venv/bin/pip install docker
+
+    # --- Démarrage du service Docker ---
+- name: Make sure Docker is running
+  service:
+    name: docker
+    state: started
+  tags: docker

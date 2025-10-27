@@ -1,0 +1,10 @@
+all:
+  vars:
+    ansible_user: admin
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    ansible_docker_host: unix:///var/run/docker.sock
+  
+  children:
+    prod:
+      hosts:
+        arthur.abdelli.takima.cloud:

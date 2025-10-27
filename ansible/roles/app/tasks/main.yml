@@ -1,0 +1,8 @@
+- name: Launch backend api container
+  community.docker.docker_container:
+    name: simple-api
+    image: artzerrr/simple-api:1.0
+    state: started
+    restart_policy: always
+    networks:
+      - name: app-network

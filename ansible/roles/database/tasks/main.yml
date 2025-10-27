@@ -1,0 +1,14 @@
+- name: Launch database container
+  community.docker.docker_container:
+    name: postgresql
+    image: artzerrr/postgresql:1.0
+    state: started
+    restart_policy: always
+    networks:
+      - name: app-network
+    env:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "usr"
+      POSTGRES_PASSWORD: "pwd"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
