@@ -1,7 +1,7 @@
-- name: Launch httpd proxy container
+- name: Launch frontend container
   community.docker.docker_container:
-    name: my-http-server
-    image: artzerrr/my-http-server:1.0
+    name: frontend
+    image: artzerrr/tp-devops-frontend:latest
     state: started
     restart_policy: always
     networks:
