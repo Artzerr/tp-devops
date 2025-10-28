@@ -5,6 +5,7 @@
     state: started
     restart_policy: always
     pull: true
+    restart: yes
     networks:
       - name: app-network
     env:
