@@ -4,5 +4,6 @@
     image: artzerrr/simple-api:1.0
     state: started
     restart_policy: always
+    pull: true
     networks:
       - name: app-network

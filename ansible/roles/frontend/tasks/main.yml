@@ -4,6 +4,7 @@
     image: artzerrr/tp-devops-frontend:latest
     state: started
     restart_policy: always
+    pull: true
     networks:
       - name: app-network
     ports:
