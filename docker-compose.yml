@@ -17,12 +17,14 @@ services:
     container_name: simple-api
     depends_on:
       - database
+    expose:
+      - "8080"
     networks:
       - app-network
 
-  httpd:
-    build: ./http-server
-    container_name: my-http-server
+  frontend:
+    build: ./front-end
+    container_name: frontend
     ports:
       - "80:80"
     depends_on:
